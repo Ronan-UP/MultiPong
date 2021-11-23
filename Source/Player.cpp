@@ -17,10 +17,10 @@ Rectangle* Player::getImage()
 
 void Player::moveUp(int d)
 {
-    image->changePosition(0, d);
+    image->changePosition(0, -1*d);
 }
 
 void Player::moveDown(int d)
 {
-    image->changePosition(0, -1*d);
+    image->changePosition(0, d);
 }

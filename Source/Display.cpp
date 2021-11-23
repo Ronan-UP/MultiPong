@@ -23,7 +23,7 @@ void Display::setShape(Rectangle* r, Colour* c)
 	re->w = r->getWidth();
 	re->h = r->getHeight();
 	SDL_RenderDrawRect(renderer, re);
-	delete temp;
+//	delete temp;
 }
 
 Display::Display(string title, int nx, int ny)

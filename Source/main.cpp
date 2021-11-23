@@ -2,7 +2,7 @@
 #include "Display.h"
 #include <map>
 
-#include "Rectangle.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -12,17 +12,17 @@ int main()
     cout<<"Nothing implemented yet. See you soon though"<<endl;
 
     //Dimensions for window
-    int width = 500;
-    int height = 700;
+    int height = 1200;
+    int width = 1000;
     Display* mainWindow = new Display("MultiPong", height, width);
 
     bool running = true;
 	SDL_Event event;
 
 
-    Rectangle* player1 = new Rectangle(0, 0, 50, 100);
-    mainWindow->setShape(player1, new Colour(255, 255, 255));
-    mainWindow->draw();
+
+
+    Player* player1 = new Player(true, 15, 100);
 
     //Map of keys currently pressed, conveniently using sdl numbers.
     //Reference the up key with keys[SDLK_UP]
@@ -30,6 +30,8 @@ int main()
 
     while (running)
     {
+        mainWindow->clear();
+
 		while(SDL_PollEvent(&event))
         {
 			switch (event.type)
@@ -52,6 +54,16 @@ int main()
             }
 		}
 
+        if (keys[SDLK_UP] != keys[SDLK_DOWN])
+        {
+            if (keys[SDLK_UP])
+                player1->moveUp(1);
+            if (keys[SDLK_DOWN])
+                player1->moveDown(1);
+        }
+
+        mainWindow->setShape(player1->getImage(), new Colour(255, 255, 255));
+        mainWindow->draw();
 	}
 
     delete mainWindow;
