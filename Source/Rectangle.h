@@ -22,6 +22,11 @@ class Rectangle : public Shape
         int getWidth();
         int getHeight();
 
+        Point* getLBound();
+        Point* getRBound();
+        Point* getTBound();
+        Point* getBBound();
+
 };
 
 

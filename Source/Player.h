@@ -25,6 +25,11 @@ class Player
         ///Get the rectangle data associated with a player
         Rectangle* getImage();
 
+        bool collides(Point* p)
+        {
+            return image->contains(p);
+        }
+
 
 };
 

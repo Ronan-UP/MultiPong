@@ -24,7 +24,7 @@ Circle.o: Circle.cpp Circle.h Shape.h
 Player.o: Player.h Player.cpp Rectangle.h
 	$(gpp_o) Player.cpp
 
-Ball.o: Ball.h Ball.cpp Circle.h
+Ball.o: Ball.h Ball.cpp Circle.h Player.h
 	$(gpp_o) Ball.cpp
 
 run: main

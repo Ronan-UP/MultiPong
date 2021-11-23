@@ -26,8 +26,11 @@ int main()
     Player* player1 = new Player(true, 15, 100, width, height);
     Player* player2 = new Player(false, 15, 100, width, height);
 
-    cout<<"Creating ball"<<endl;
-    Ball* ball = new Ball(width/2, height/2, 10, 3.14/3, 2.15);
+    //SDL_HINT_RENDER_VSYNC = 1;
+    cout<<"Creating ball "<<endl;
+    Ball* ball = new Ball(width/2, height/2, 10, 0.5, 6, width, height);
+
+    ball->bindPlayers(player1, player2);
 
     //Map of keys currently pressed, conveniently using sdl numbers.
     //Reference the up key with keys[SDLK_UP]
@@ -59,12 +62,20 @@ int main()
             }
 		}
 
-        if (keys[SDLK_UP] != keys[SDLK_DOWN])
+        if (keys[SDLK_w] != keys[SDLK_s])
         {
-            if (keys[SDLK_UP])
-                player1->moveUp(1);
-            if (keys[SDLK_DOWN])
-                player1->moveDown(1);
+            if (keys[SDLK_w])
+                player1->moveUp(10);
+            if (keys[SDLK_s])
+                player1->moveDown(10);
+        }
+
+        if (keys[SDLK_p] != keys[SDLK_l])
+        {
+            if (keys[SDLK_p])
+                player2->moveUp(10);
+            if (keys[SDLK_l])
+                player2->moveDown(10);
         }
 
         mainWindow->setShape(player1->getImage(), new Colour(255, 255, 255));

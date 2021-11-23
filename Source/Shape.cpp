@@ -17,17 +17,17 @@ Point* Shape::getPosition()
     return position;
 }
 
-void Shape::changePosition(int x, int y)
+void Shape::changePosition(double x, double y)
 {
     position->x += x;
     position->y += y;
 }
 
-void Shape::setX(int x)
+void Shape::setX(double x)
 {
     position->x = x;
 }
-void Shape::setY(int y)
+void Shape::setY(double y)
 {
     position->y = y;
 }

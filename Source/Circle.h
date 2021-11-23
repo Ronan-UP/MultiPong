@@ -17,6 +17,11 @@ class Circle : public Shape
 
     int getRadius();
 
+    Point* getLBound();
+    Point* getRBound();
+    Point* getTBound();
+    Point* getBBound();
+
 };
 
 #endif

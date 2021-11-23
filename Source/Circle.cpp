@@ -11,3 +11,20 @@ int Circle::getRadius()
 {
     return radius;
 }
+
+Point* Circle::getLBound()
+{
+    return new Point(position->x-radius, position->y);
+}
+Point* Circle::getRBound()
+{
+    return new Point(position->x+radius, position->y);
+}
+Point* Circle::getTBound()
+{
+    return new Point(position->x, position->y - radius);
+}
+Point* Circle::getBBound()
+{
+    return new Point(position->x, position->y + radius);
+}

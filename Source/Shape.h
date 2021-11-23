@@ -11,8 +11,8 @@ struct Point
         x = nx;
         y = ny;
     }
-    int x;
-    int y;
+    double x;
+    double y;
 };
 
 class Shape
@@ -25,11 +25,18 @@ class Shape
         Shape(int nx, int ny);
         ~Shape();
 
-        void changePosition(int x, int y);
-        void setX(int x);
-        void setY(int y);
+        void changePosition(double x, double y);
+        void setX(double x);
+        void setY(double y);
         Point* getPosition();
         virtual bool contains(Point*) =0;
+
+        ///Get the bounds of the shape
+        virtual Point* getLBound() =0;
+        virtual Point* getRBound() =0;
+        virtual Point* getTBound() =0;
+        virtual Point* getBBound() =0;
+
 };
 
 
