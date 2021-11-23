@@ -27,7 +27,7 @@ int main()
     Player* player2 = new Player(false, 15, 100, width, height);
 
     cout<<"Creating ball"<<endl;
-    Ball* ball = new Ball(width/2, height/2, 10, 90, 5);
+    Ball* ball = new Ball(width/2, height/2, 10, 3.14/3, 2.15);
 
     //Map of keys currently pressed, conveniently using sdl numbers.
     //Reference the up key with keys[SDLK_UP]
@@ -69,6 +69,7 @@ int main()
 
         mainWindow->setShape(player1->getImage(), new Colour(255, 255, 255));
         mainWindow->setShape(player2->getImage(), new Colour(255, 255, 255));
+        ball->update();
         mainWindow->setShape(ball->getImage(), new Colour(255, 255, 255));
         mainWindow->draw();
 	}

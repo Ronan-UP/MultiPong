@@ -13,3 +13,8 @@ Circle* Ball::getImage()
 {
     return image;
 }
+
+void Ball::update()
+{
+    image->changePosition(velocity*cos(angle), velocity*sin(angle));
+}
