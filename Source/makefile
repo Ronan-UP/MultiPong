@@ -1,4 +1,4 @@
-ofiles = main.o Display.o
+ofiles = main.o Display.o Shape.o Rectangle.o
 gpp_o = g++ -c 
 link_flags_sdl2 = -LLib/ -lSDL2
 
@@ -11,6 +11,12 @@ main.o: main.cpp Display.h
 
 Display.o: Display.h Display.cpp
 	$(gpp_o) Display.cpp
+
+Shape.o: Shape.cpp Shape.h
+	$(gpp_o) Shape.cpp
+
+Rectangle.o: Rectangle.cpp Rectangle.h Shape.h
+	$(gpp_o) Rectangle.cpp
 
 run: main
 	./main

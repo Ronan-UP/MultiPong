@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Display.h"
+#include <map>
 
 using namespace std;
 
@@ -8,12 +9,18 @@ int main()
 {
     cout<<"Nothing implemented yet. See you soon though"<<endl;
 
+    //Dimensions for window
     int width = 500;
     int height = 700;
     Display* mainWindow = new Display("MultiPong", height, width);
 
     bool running = true;
 	SDL_Event event;
+
+    //Map of keys currently pressed, conveniently using sdl numbers.
+    //Reference the up key with keys[SDLK_UP]
+    map<int, bool> keys;
+
     while (running)
     {
 		while( SDL_PollEvent( &event ) )
@@ -27,14 +34,12 @@ int main()
                 }
                 case SDL_KEYDOWN:
                 {
-                    //keyboard[event.key.keysym.sym] = false;
-                    cout<<"Key "<<event.key.keysym.sym<<" down"<<endl;
+                    keys[event.key.keysym.sym] = true;
                     break;
                 }
                 case SDL_KEYUP:
                 {
-                    //keyboard[event.key.keysym.sym] = true;
-                    cout<<"Key "<<event.key.keysym.sym<<" up"<<endl;
+                    keys[event.key.keysym.sym] = false;
                     break;
                 }
             }
@@ -42,5 +47,6 @@ int main()
 
 	}
 
+    delete mainWindow;
     return 0;
 }
