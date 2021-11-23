@@ -16,3 +16,9 @@ Point* Shape::getPosition()
 {
     return position;
 }
+
+void Shape::changePosition(int x, int y)
+{
+    position->x += x;
+    position->y += y;
+}

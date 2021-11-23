@@ -30,7 +30,7 @@ int main()
 
     while (running)
     {
-		while( SDL_PollEvent( &event ) )
+		while(SDL_PollEvent(&event))
         {
 			switch (event.type)
             {

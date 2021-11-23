@@ -1,5 +1,4 @@
 //This class is used to represent rectangle shapes
-
 #ifndef RECT_H
 #define RECT_H
 
