@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include "Rectangle.h"
+#include "Circle.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ class Display {
 		~Display();
 		void setPoint(int, int, Colour*);
 		void setShape(Rectangle*, Colour*);
+		void setShape(Circle*, Colour*);
 		void clear();
 		void draw();
 
@@ -36,5 +38,5 @@ class Display {
 		SDL_Surface* windowSurface;
 		int height;
 		int width;
-
+		void SDL_RenderDrawCircle( int x, int y, int radius);
 };

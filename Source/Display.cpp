@@ -2,7 +2,6 @@
 
 using namespace std;
 
-
 void Display::setPoint(int x, int y, Colour* c) 
 {
 
@@ -24,6 +23,12 @@ void Display::setShape(Rectangle* r, Colour* c)
 	re->h = r->getHeight();
 	SDL_RenderDrawRect(renderer, re);
 //	delete temp;
+}
+
+void Display::setShape(Circle* ci, Colour* co)
+{
+	SDL_SetRenderDrawColor(renderer, co->r, co->g, co->b, 255);
+	SDL_RenderDrawCircle(ci->getPosition()->x, ci->getPosition()->x, ci->getRadius());
 }
 
 Display::Display(string title, int nx, int ny)
@@ -56,3 +61,47 @@ void Display::draw() {
 	SDL_RenderPresent(renderer);
 }
 
+//External method obtained from Github, Gumichan01.
+void Display::SDL_RenderDrawCircle( int x, int y, int radius)
+{
+    int offsetx, offsety, d;
+    int status;
+
+    //CHECK_RENDERER_MAGIC(renderer, -1);
+
+    offsetx = 0;
+    offsety = radius;
+    d = radius -1;
+    status = 0;
+
+    while (offsety >= offsetx) {
+        status += SDL_RenderDrawPoint(renderer, x + offsetx, y + offsety);
+        status += SDL_RenderDrawPoint(renderer, x + offsety, y + offsetx);
+        status += SDL_RenderDrawPoint(renderer, x - offsetx, y + offsety);
+        status += SDL_RenderDrawPoint(renderer, x - offsety, y + offsetx);
+        status += SDL_RenderDrawPoint(renderer, x + offsetx, y - offsety);
+        status += SDL_RenderDrawPoint(renderer, x + offsety, y - offsetx);
+        status += SDL_RenderDrawPoint(renderer, x - offsetx, y - offsety);
+        status += SDL_RenderDrawPoint(renderer, x - offsety, y - offsetx);
+
+        if (status < 0) {
+            status = -1;
+            break;
+        }
+
+        if (d >= 2*offsetx) {
+            d -= 2*offsetx + 1;
+            offsetx +=1;
+        }
+        else if (d < 2 * (radius - offsety)) {
+            d += 2 * offsety - 1;
+            offsety -= 1;
+        }
+        else {
+            d += 2 * (offsety - offsetx - 1);
+            offsety -= 1;
+            offsetx += 1;
+        }
+    }
+
+}
