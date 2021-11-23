@@ -22,7 +22,7 @@ struct Colour {
 class Display {
 
 	public:
-		Display(string, int, int);
+		Display(string t, int w, int h);
 		~Display();
 		void setPoint(int, int, Colour*);
 		void setShape(Rectangle*, Colour*);

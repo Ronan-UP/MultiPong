@@ -28,7 +28,7 @@ void Display::setShape(Rectangle* r, Colour* c)
 void Display::setShape(Circle* ci, Colour* co)
 {
 	SDL_SetRenderDrawColor(renderer, co->r, co->g, co->b, 255);
-	SDL_RenderDrawCircle(ci->getPosition()->x, ci->getPosition()->x, ci->getRadius());
+	SDL_RenderDrawCircle(ci->getPosition()->x, ci->getPosition()->y, ci->getRadius());
 }
 
 Display::Display(string title, int nx, int ny)

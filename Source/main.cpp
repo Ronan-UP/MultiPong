@@ -3,6 +3,7 @@
 #include <map>
 
 #include "Player.h"
+#include "Ball.h"
 
 using namespace std;
 
@@ -12,9 +13,9 @@ int main()
     cout<<"Nothing implemented yet. See you soon though"<<endl;
 
     //Dimensions for window
-    int height = 1200;
-    int width = 1000;
-    Display* mainWindow = new Display("MultiPong", height, width);
+    int width = 1200;
+    int height = 1000;
+    Display* mainWindow = new Display("MultiPong", width, height);
 
     bool running = true;
 	SDL_Event event;
@@ -23,6 +24,8 @@ int main()
 
 
     Player* player1 = new Player(true, 15, 100);
+
+    Ball* ball = new Ball(width/2, height/2, 10, 90, 5);
 
     //Map of keys currently pressed, conveniently using sdl numbers.
     //Reference the up key with keys[SDLK_UP]
@@ -63,6 +66,7 @@ int main()
         }
 
         mainWindow->setShape(player1->getImage(), new Colour(255, 255, 255));
+        mainWindow->setShape(ball->getImage(), new Colour(255, 255, 255));
         mainWindow->draw();
 	}
 
