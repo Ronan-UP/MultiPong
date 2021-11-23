@@ -64,5 +64,13 @@ void Ball::update()
     }
     delete left;
 
+    //Player2 gets a point
+    if (image->getPosition()->x<0)
+        throw 2;
+    //Player1 gets a point
+    if (image->getPosition()->x>winWidth)
+        throw 1;
+
+
     image->changePosition(velocity*cos(angle), velocity*sin(angle));
 }

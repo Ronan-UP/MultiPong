@@ -4,6 +4,7 @@
 #include <string>
 #include "Rectangle.h"
 #include "Circle.h"
+#include <string>
 
 using namespace std;
 
@@ -25,6 +26,7 @@ class Display {
 		Display(string t, int w, int h);
 		~Display();
 		void setPoint(int, int, Colour*);
+		//void showText(string mess, int x, int y);
 		void setShape(Rectangle*, Colour*);
 		void setShape(Circle*, Colour*);
 		void clear();

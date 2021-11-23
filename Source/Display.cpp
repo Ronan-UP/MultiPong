@@ -105,3 +105,10 @@ void Display::SDL_RenderDrawCircle( int x, int y, int radius)
     }
 
 }
+
+// void Display::showText(string mess, int x, int y)
+// {
+// 	// TTF_Font * font = TTF_OpenFont("arial.ttf", 25)
+// 	// SDL_Color color = { 255, 255, 255 };
+// 	// SDL_Surface * surface = TTF_RenderText_Solid(font, mess, color);
+// }
