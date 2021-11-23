@@ -26,6 +26,8 @@ class Shape
         ~Shape();
 
         void changePosition(int x, int y);
+        void setX(int x);
+        void setY(int y);
         Point* getPosition();
         virtual bool contains(Point*) =0;
 };

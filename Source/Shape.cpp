@@ -22,3 +22,12 @@ void Shape::changePosition(int x, int y)
     position->x += x;
     position->y += y;
 }
+
+void Shape::setX(int x)
+{
+    position->x = x;
+}
+void Shape::setY(int y)
+{
+    position->y = y;
+}

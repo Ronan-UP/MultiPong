@@ -18,6 +18,7 @@ class Rectangle : public Shape
                 height = h;
         };
         bool contains(Point*);
+
         int getWidth();
         int getHeight();
 

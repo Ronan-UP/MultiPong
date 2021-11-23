@@ -1,5 +1,6 @@
 //This class represents a player
 
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -15,7 +16,7 @@ class Player
         int winHeight;
 
     public:
-        Player(bool p1, int w, int h);
+        Player(bool p1, int w, int h, int ww, int wh);
 
         ///Move up by a specified number
         void moveUp(int);

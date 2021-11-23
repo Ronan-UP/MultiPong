@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-    cout<<"Nothing implemented yet. See you soon though"<<endl;
+    cout<<"Creating window"<<endl;
 
     //Dimensions for window
     int width = 1200;
@@ -22,9 +22,11 @@ int main()
 
 
 
+    cout<<"Creating players"<<endl;
+    Player* player1 = new Player(true, 15, 100, width, height);
+    Player* player2 = new Player(false, 15, 100, width, height);
 
-    Player* player1 = new Player(true, 15, 100);
-
+    cout<<"Creating ball"<<endl;
     Ball* ball = new Ball(width/2, height/2, 10, 90, 5);
 
     //Map of keys currently pressed, conveniently using sdl numbers.
@@ -66,10 +68,13 @@ int main()
         }
 
         mainWindow->setShape(player1->getImage(), new Colour(255, 255, 255));
+        mainWindow->setShape(player2->getImage(), new Colour(255, 255, 255));
         mainWindow->setShape(ball->getImage(), new Colour(255, 255, 255));
         mainWindow->draw();
 	}
 
+    delete player1;
+    delete ball;
     delete mainWindow;
     return 0;
 }
