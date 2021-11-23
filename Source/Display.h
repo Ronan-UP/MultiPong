@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include <string>
+#include "Rectangle.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ class Display {
 		Display(string, int, int);
 		~Display();
 		void setPoint(int, int, Colour*);
+		void setShape(Rectangle*, Colour*);
 		void clear();
 		void draw();
 

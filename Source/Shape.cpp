@@ -11,3 +11,8 @@ Shape::~Shape()
 {
     delete position;
 }
+
+Point* Shape::getPosition()
+{
+    return position;
+}

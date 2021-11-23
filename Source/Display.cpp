@@ -10,6 +10,21 @@ void Display::setPoint(int x, int y, Colour* c)
 	SDL_RenderDrawPoint(renderer, x, y);
 }
 
+void Display::setShape(Rectangle* r, Colour* c)
+{
+
+	SDL_SetRenderDrawColor(renderer, c->r, c->g, c->b, 255);
+	SDL_Rect* re = new SDL_Rect();
+
+	Shape* temp = dynamic_cast<Shape*>(r);
+
+	re->x = temp->getPosition()->x;
+	re->y = temp->getPosition()->y;
+	re->w = r->getWidth();
+	re->h = r->getHeight();
+	SDL_RenderDrawRect(renderer, re);
+	delete temp;
+}
 
 Display::Display(string title, int nx, int ny)
 {

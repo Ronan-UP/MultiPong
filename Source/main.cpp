@@ -2,6 +2,8 @@
 #include "Display.h"
 #include <map>
 
+#include "Rectangle.h"
+
 using namespace std;
 
 
@@ -16,6 +18,11 @@ int main()
 
     bool running = true;
 	SDL_Event event;
+
+
+    Rectangle* player1 = new Rectangle(0, 0, 50, 100);
+    mainWindow->setShape(player1, new Colour(255, 255, 255));
+    mainWindow->draw();
 
     //Map of keys currently pressed, conveniently using sdl numbers.
     //Reference the up key with keys[SDLK_UP]

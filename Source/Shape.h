@@ -18,7 +18,7 @@ struct Point
 class Shape
 {
 
-    private:
+    protected:
         Point* position;
 
     public:
