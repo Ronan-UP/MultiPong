@@ -9,7 +9,7 @@ void Display::setPoint(int x, int y, Colour* c)
 	SDL_RenderDrawPoint(renderer, x, y);
 }
 
-void Display::setShape(Rectangle* r, Colour* c)
+void Display::setShape(SolidRectangle* r, Colour* c)
 {
 
 	SDL_SetRenderDrawColor(renderer, c->r, c->g, c->b, 255);

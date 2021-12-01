@@ -8,27 +8,19 @@
 
 using namespace std;
 
-class Player
+class Player : public SolidRectangle
 {
     private:
-        Rectangle* image;
         int winWidth;
         int winHeight;
 
     public:
-        Player(bool p1, int w, int h, int ww, int wh);
 
-        ///Move up by a specified number
-        void moveUp(int);
-        ///Move down by a specified number
-        void moveDown(int);
-        ///Get the rectangle data associated with a player
-        Rectangle* getImage();
+        //Should change height/width to be in range [0,1]
+        Player(bool p1, double w, double h, int ww, int wh);
 
-        bool collides(Point* p)
-        {
-            return image->contains(p);
-        }
+        void changeVertPos(double d);
+        double collide(SolidRectangle* ball, double angle);
 
 
 };

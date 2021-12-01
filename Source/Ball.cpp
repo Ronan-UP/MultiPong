@@ -2,26 +2,40 @@
 
 using namespace std;
 
-Ball::Ball(int x, int y, int r, double a, double vel, int width, int height)
+Ball::Ball(int x, int y, int r, double a, double vel, int width, int height) : SolidRectangle(x, y, r/2, r/2)
 {
-    image = new Circle(x, y, r);
     angle = a;
     velocity = vel;
 
     winWidth = width;
     winHeight = height;
-    p1 = p2 = 0;
+    objects = new SolidRectangle*[4];
+    for (int i =0;i<4;i++)
+    {
+        objects[i] = nullptr;
+    }
 }
 
-void Ball::bindPlayers(Player* pl1, Player* pl2)
+void Ball::bindObject(SolidRectangle* r)
 {
-    p1 = pl1;
-    p2 = pl2;
+    for (int i =0;i<4;i++)
+    {
+        if (!objects[i])
+        {
+            objects[i] = r;
+            break;
+        }
+    }
 }
 
-Circle* Ball::getImage()
+double Ball::getAngle()
 {
-    return image;
+    return angle;
+}
+
+void Ball::setAngle(double a)
+{
+    angle = a;
 }
 
 void Ball::update()
@@ -29,7 +43,14 @@ void Ball::update()
 
     //Collision detection
     //Works on the assumption that p1 is left, p2 is right
-    Point* pos = image->getPosition();
+
+
+    for (int i =0;i<4 && objects[i];i++)
+    {
+        angle = objects[i]->collide(this, angle);
+    }
+  
+  /*  Point* pos = image->getPosition();
 
     Point* left = image->getLBound();
 
@@ -62,15 +83,15 @@ void Ball::update()
         }
         delete right;
     }
-    delete left;
+    delete left; */
 
     //Player2 gets a point
-    if (image->getPosition()->x<0)
+    if (getPosition()->x<0)
         throw 2;
     //Player1 gets a point
-    if (image->getPosition()->x>winWidth)
+    if (getPosition()->x>winWidth)
         throw 1;
 
 
-    image->changePosition(velocity*cos(angle), velocity*sin(angle));
+    changePosition(velocity*cos(angle), velocity*sin(angle));
 }

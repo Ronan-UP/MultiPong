@@ -27,7 +27,7 @@ class Display {
 		~Display();
 		void setPoint(int, int, Colour*);
 		//void showText(string mess, int x, int y);
-		void setShape(Rectangle*, Colour*);
+		void setShape(SolidRectangle*, Colour*);
 		void setShape(Circle*, Colour*);
 		void clear();
 		void draw();

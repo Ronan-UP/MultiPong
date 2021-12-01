@@ -3,8 +3,10 @@
 #define RECT_H
 
 #include "Shape.h"
+#include <cmath>
 
-class Rectangle : public Shape
+//A rectangle with colission
+class SolidRectangle : public Shape
 {
     private:
         int width;
@@ -12,15 +14,20 @@ class Rectangle : public Shape
 
     public:
         //The position corresponds to the top left corner
-        Rectangle(int x, int y, int w, int h) : Shape(x, y)
+        SolidRectangle(int x, int y, int w, int h) : Shape(x, y)
         {
                 width = w;
                 height = h;
         };
         bool contains(Point*);
 
+        //Collide the ball with the object
+        virtual double collide(SolidRectangle* ball, double angle);
+
         int getWidth();
         int getHeight();
+
+        double getCentreY();
 
         Point* getLBound();
         Point* getRBound();

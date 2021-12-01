@@ -9,26 +9,25 @@
 
 using namespace std;
 
-class Ball
+class Ball : public SolidRectangle
 {
     private:
-        Circle* image;
         double angle;
         double velocity;
         int winWidth;
         int winHeight;
 
-        Player* p1;
-        Player* p2;
+        SolidRectangle** objects;
 
     public:
         Ball(int x, int y, int r, double a, double vel, int width, int height);
-        Circle* getImage();
 
-        void bindPlayers(Player* pl1, Player* pl2);
+        void bindObject(SolidRectangle* r);
 
         ///Let the ball move in its current direction
         void update();
+        double getAngle();
+        void setAngle(double a);
 
 };
 

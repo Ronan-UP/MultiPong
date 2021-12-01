@@ -1,6 +1,8 @@
 #include <iostream>
+#include <cmath>
 #include "Display.h"
 #include <map>
+#include <chrono>
 
 #include "Player.h"
 #include "Ball.h"
@@ -13,13 +15,12 @@ int main()
     cout<<"Creating window"<<endl;
 
     //Dimensions for window
-    int width = 1200;
-    int height = 1000;
+    int width = 700;
+    int height = 700;
     Display* mainWindow = new Display("MultiPong", width, height);
 
     bool running = true;
 	SDL_Event event;
-
 
 
     cout<<"Creating players"<<endl;
@@ -28,15 +29,24 @@ int main()
 
     cout<<"Creating ball "<<endl;
 
-    double angle1 = rand()/(double)RAND_MAX*2*M_PI;
+    double angle1 = 0;//rand()/(double)RAND_MAX*2*M_PI;
     double dir = rand()/(double)RAND_MAX;
+    //angle1 = 0;
 
     if (dir<0.5)
         angle1 += M_PI;
 
-    Ball* ball = new Ball(width/2, height/2, 10, angle1, 6, width, height);
+    Ball* ball = new Ball(width/2, height/2, 30, angle1, 6, width, height);
 
-    ball->bindPlayers(player1, player2);
+    //ball->bindPlayers(player1, player2);
+
+
+    SolidRectangle* top = new SolidRectangle(0, 0, width, 10 );
+    SolidRectangle* bottom = new SolidRectangle(0, height -10, width, 10 );
+    ball->bindObject(player1);
+    ball->bindObject(player2);
+    ball->bindObject(top);
+    ball->bindObject(bottom);
 
     //Map of keys currently pressed, conveniently using sdl numbers.
     //Reference the up key with keys[SDLK_UP]
@@ -46,6 +56,7 @@ int main()
 
     while (running)
     {
+
         mainWindow->clear();
 
 		while(SDL_PollEvent(&event))
@@ -73,21 +84,23 @@ int main()
         if (keys[SDLK_w] != keys[SDLK_s])
         {
             if (keys[SDLK_w])
-                player1->moveUp(10);
+                player1->changeVertPos(-10);
             if (keys[SDLK_s])
-                player1->moveDown(10);
+                player1->changeVertPos(10);
         }
 
         if (keys[SDLK_p] != keys[SDLK_l])
         {
             if (keys[SDLK_p])
-                player2->moveUp(10);
+                player2->changeVertPos(-10);
             if (keys[SDLK_l])
-                player2->moveDown(10);
+                player2->changeVertPos(10);
         }
 
-        mainWindow->setShape(player1->getImage(), new Colour(255, 255, 255));
-        mainWindow->setShape(player2->getImage(), new Colour(255, 255, 255));
+        mainWindow->setShape(player1, new Colour(255, 255, 255));
+        mainWindow->setShape(player2, new Colour(255, 255, 255));
+        mainWindow->setShape(top, new Colour(255, 255, 255));
+        mainWindow->setShape(bottom, new Colour(255, 255, 255));
 
         try
         {
@@ -96,21 +109,27 @@ int main()
         catch(int p)
         {
             cout<<p<<" got a point"<<endl;
-            delete ball;
-            double angle = (rand()/(double)RAND_MAX)*M_PI/2 - M_PI/4;
+            //delete ball;
+            double angle1 = 0;//rand()/(double)RAND_MAX*2*M_PI;
+            double dir = rand()/(double)RAND_MAX;
+            //angle1 = 0;
 
-            if (turn)
-                angle += M_PI;
+            if (dir<0.5)
+                angle1 += M_PI;
 
             turn = !turn;
 
-            ball = new Ball(width/2, height/2, 10, angle, 6, width, height);
+            //ball = new Ball(width/2, height/2, 10, angle, 6, width, height);
 
-            ball->bindPlayers(player1, player2);
+            ball->setAngle(angle1);
+            ball->setX(width/2);
+            ball->setY(height/2);
+
+           // ball->bindPlayers(player1, player2);
         }
         
 
-        mainWindow->setShape(ball->getImage(), new Colour(255, 255, 255));
+        mainWindow->setShape(ball, new Colour(255, 255, 255));
         mainWindow->draw();
 	}
 
