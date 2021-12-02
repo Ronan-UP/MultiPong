@@ -19,9 +19,45 @@ int main()
     int height = 600;
     Display* mainWindow = new Display("MultiPong", width, height);
 
-    bool running = true;
 	SDL_Event event;
 
+    //Show initial menu
+
+    mainWindow->showText("Welcome to MultiPong!", 50, (width-570)/2, 1);
+    mainWindow->showText("Select an option using the number keys", 30, (width-570)/2, 80);
+    mainWindow->showText("Local Play (1)", 50, (width-500)/2, 300);
+    mainWindow->showText("LAN Play (2)", 50, (width-500)/2, 350);
+    mainWindow->draw();
+
+    bool menu = true;
+    while (menu)
+    {
+        while(SDL_PollEvent(&event))
+        {
+			switch (event.type)
+            {
+                case SDL_QUIT:
+                {
+				    return 0;
+                }
+                case SDL_KEYDOWN:
+                {
+                    if (event.key.keysym.sym == SDLK_1)
+                    {
+                        cout<<"Local Game"<<endl;
+                        menu = false;
+                    }
+                    else if(event.key.keysym.sym == SDLK_2)
+                    {
+                        cout<<"LAN Game"<<endl;
+                    }
+                    break;
+                }
+            }
+		}
+    }
+
+    bool running = true;
 
     cout<<"Creating players"<<endl;
     Player* player1 = new Player(true, 15, 70, width, height);

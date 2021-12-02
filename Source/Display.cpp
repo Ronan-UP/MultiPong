@@ -45,7 +45,7 @@ Display::Display(string title, int nx, int ny)
 	SDL_RenderClear(renderer);
 
     if (TTF_Init() >= 0)
-        Sans = TTF_OpenFont("./Fonts/OpenSans-Regular.ttf", 24);
+        Sans = TTF_OpenFont("./Fonts/OpenSans-Regular.ttf", 100);
     else 
         Sans = 0;
 
@@ -86,7 +86,7 @@ void Display::showText(string t, double size, double x, double y)
     SDL_Rect Message_rect;
     Message_rect.x = x;
     Message_rect.y = y;
-    Message_rect.w = size;
+    Message_rect.w = (t.length())*size/2;
     Message_rect.h = size;
 
     SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
