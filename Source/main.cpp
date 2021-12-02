@@ -9,6 +9,10 @@
 
 using namespace std;
 
+enum GameType
+{
+    Local, LANHost, LANClient
+} gt;
 
 int main()
 {
@@ -45,11 +49,48 @@ int main()
                     if (event.key.keysym.sym == SDLK_1)
                     {
                         cout<<"Local Game"<<endl;
+                        gt = Local;
                         menu = false;
                     }
                     else if(event.key.keysym.sym == SDLK_2)
                     {
-                        cout<<"LAN Game"<<endl;
+                        cout<<"LAN Game"<<endl; //Second menu
+
+                        mainWindow->clear();
+                        mainWindow->showText("Host a game (1)", 50, (width-500)/2, 300);
+                        mainWindow->showText("Join a game (2)", 50, (width-500)/2, 350);
+                        mainWindow->draw();
+
+                        while (menu)
+                        {
+                            while(SDL_PollEvent(&event))
+                            {
+                                switch (event.type)
+                                {
+                                    case SDL_QUIT:
+                                    {
+                                        return 0;
+                                    }
+                                    case SDL_KEYDOWN:
+                                    {
+                                        if (event.key.keysym.sym == SDLK_1)
+                                        {
+                                            cout<<"Host Game"<<endl;
+                                            gt = LANHost;
+                                            menu = false;
+                                        }
+                                        else if(event.key.keysym.sym == SDLK_2)
+                                        {
+                                            cout<<"Find Game"<<endl;
+                                            gt = LANClient;
+                                            menu = false;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
                     }
                     break;
                 }
@@ -161,6 +202,20 @@ int main()
             scores[p]++;
             ball->reset();
             SDL_Delay(200);
+
+            if (scores[0]>=10 || scores[1]>=10)
+            {
+                string win = "1";
+                if (scores[1] >=10)
+                    win = "2";
+
+                mainWindow->clear();
+                mainWindow->showText("Player " + win + " wins!", 70, (width-500)/2, 300);
+                mainWindow->draw();
+                SDL_Delay(2000);
+                return 0;
+
+            }
         }
         
         mainWindow->draw();
