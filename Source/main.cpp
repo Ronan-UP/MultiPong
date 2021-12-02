@@ -29,13 +29,7 @@ int main()
 
     cout<<"Creating ball "<<endl;
 
-    double angle1 = 0;//rand()/(double)RAND_MAX*2*M_PI;
-    double dir = rand()/(double)RAND_MAX;
-
-    if (dir<0.5)
-        angle1 += M_PI;
-
-    Ball* ball = new Ball(width/2, height/2, 30, angle1, width, height);
+    Ball* ball = new Ball(width/2, height/2, 30, width, height);
 
     SolidRectangle* top = new SolidRectangle(0, 0, width, 10 );
     SolidRectangle* bottom = new SolidRectangle(0, height -10, width, 10 );
@@ -67,7 +61,7 @@ int main()
 
     bool turn = true;
 
-    int playerMov = 8;
+    int playerMov = 6;
 
     while (running)
     {

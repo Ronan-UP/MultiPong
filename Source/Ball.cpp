@@ -2,10 +2,8 @@
 
 using namespace std;
 
-Ball::Ball(int x, int y, int r, double a, int width, int height) : SolidRectangle(x, y, r/2, r/2)
+Ball::Ball(int x, int y, int r, int width, int height) : SolidRectangle(x, y, r/2, r/2)
 {
-    angle = a;
-
     winWidth = width;
     winHeight = height;
     objects = new SolidRectangle*[4];

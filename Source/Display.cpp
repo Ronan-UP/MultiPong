@@ -45,9 +45,9 @@ Display::Display(string title, int nx, int ny)
 	SDL_RenderClear(renderer);
 
     if (TTF_Init() >= 0)
-    Sans = TTF_OpenFont("./Fonts/OpenSans-Regular.ttf", 24);
+        Sans = TTF_OpenFont("./Fonts/OpenSans-Regular.ttf", 24);
     else 
-    Sans = 0;
+        Sans = 0;
 
 }
 
