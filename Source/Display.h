@@ -1,6 +1,7 @@
 //This class is used as an interaction with the window
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <string>
 #include "Rectangle.h"
 #include "Circle.h"
@@ -26,11 +27,11 @@ class Display {
 		Display(string t, int w, int h);
 		~Display();
 		void setPoint(int, int, Colour*);
-		//void showText(string mess, int x, int y);
 		void setShape(SolidRectangle*, Colour*);
 		void setShape(Circle*, Colour*);
 		void clear();
 		void draw();
+		void showText(string text, double size, double x, double y);
 
 	private:
 
@@ -40,5 +41,6 @@ class Display {
 		SDL_Surface* windowSurface;
 		int height;
 		int width;
+		TTF_Font* Sans;
 		void SDL_RenderDrawCircle( int x, int y, int radius);
 };

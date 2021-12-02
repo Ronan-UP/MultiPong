@@ -22,6 +22,7 @@ class Ball : public SolidRectangle
 
     public:
         Ball(int x, int y, int r, double a, int width, int height);
+        ~Ball();
 
         void bindObject(SolidRectangle* r);
 

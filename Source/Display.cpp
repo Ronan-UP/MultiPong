@@ -1,4 +1,5 @@
 #include "Display.h"
+#include <iostream>
 
 using namespace std;
 
@@ -22,7 +23,8 @@ void Display::setShape(SolidRectangle* r, Colour* c)
 	re->w = r->getWidth();
 	re->h = r->getHeight();
 	SDL_RenderFillRect(renderer, re);
-//	delete temp;
+
+    delete re;
 }
 
 void Display::setShape(Circle* ci, Colour* co)
@@ -42,6 +44,11 @@ Display::Display(string title, int nx, int ny)
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_RenderClear(renderer);
 
+    if (TTF_Init() >= 0)
+    Sans = TTF_OpenFont("./Fonts/OpenSans-Regular.ttf", 24);
+    else 
+    Sans = 0;
+
 }
 
 void Display::clear() {
@@ -53,12 +60,40 @@ void Display::clear() {
 Display::~Display() {
 
 	SDL_DestroyWindow(window);
+    //delete windowSurface;
 }
 
 
 void Display::draw() {
 
 	SDL_RenderPresent(renderer);
+}
+
+void Display::showText(string t, double size, double x, double y)
+{
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+    if (!Sans)
+    {
+        cout<<TTF_GetError()<<endl;
+        TTF_Init();
+        return;
+    }
+
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(Sans, t.c_str(), {255, 255, 255});
+    SDL_Texture* Message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+
+    SDL_Rect Message_rect;
+    Message_rect.x = x;
+    Message_rect.y = y;
+    Message_rect.w = size;
+    Message_rect.h = size;
+
+    SDL_RenderCopy(renderer, Message, NULL, &Message_rect);
+
+    SDL_DestroyTexture(Message);
+	SDL_FreeSurface(surfaceMessage);
+ 
 }
 
 //External method obtained from Github, Gumichan01.

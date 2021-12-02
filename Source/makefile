@@ -1,6 +1,6 @@
 ofiles = main.o Display.o Shape.o Rectangle.o Player.o Circle.o Ball.o
 gpp_o = g++ -c 
-link_flags_sdl2 = -LLib/ -lSDL2
+link_flags_sdl2 = -LLib/ -lSDL2 -lSDL2_ttf
 
 main: $(ofiles)
 	g++ $(ofiles) $(link_flags_sdl2) -o main

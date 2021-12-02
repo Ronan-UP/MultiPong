@@ -31,20 +31,17 @@ int main()
 
     double angle1 = 0;//rand()/(double)RAND_MAX*2*M_PI;
     double dir = rand()/(double)RAND_MAX;
-    //angle1 = 0;
 
     if (dir<0.5)
         angle1 += M_PI;
 
     Ball* ball = new Ball(width/2, height/2, 30, angle1, width, height);
 
-    //ball->bindPlayers(player1, player2);
-
-
-
     SolidRectangle* top = new SolidRectangle(0, 0, width, 10 );
     SolidRectangle* bottom = new SolidRectangle(0, height -10, width, 10 );
 
+
+    Colour* white = new Colour(255, 255, 255);
     const int numObjects = 5;
     SolidRectangle* objects[numObjects];
     objects[0] = ball;
@@ -59,6 +56,10 @@ int main()
     {
         ball->bindObject(objects[i]);
     }
+
+
+    int scores[2];
+    scores[0] = scores[1] = 0;
 
     //Map of keys currently pressed, conveniently using sdl numbers.
     //Reference the up key with keys[SDLK_UP]
@@ -114,13 +115,11 @@ int main()
         //Draw the main objects
         for (int i =0;i<numObjects;i++)
         {
-            mainWindow->setShape(objects[i], new Colour(255, 255, 255));
+            mainWindow->setShape(objects[i], white);
         }
 
-        // mainWindow->setShape(player1, new Colour(255, 255, 255));
-        // mainWindow->setShape(player2, new Colour(255, 255, 255));
-        // mainWindow->setShape(top, new Colour(255, 255, 255));
-        // mainWindow->setShape(bottom, new Colour(255, 255, 255));
+        mainWindow->showText(to_string(scores[0]), 50, width/4, 10);
+        mainWindow->showText(to_string(scores[1]), 50, 3*width/4, 10);
 
         try
         {
@@ -129,12 +128,11 @@ int main()
         catch(int p)
         {
             cout<<p<<" got a point"<<endl;
+            scores[p]++;
             ball->reset();
-            SDL_Delay(1000);
+            SDL_Delay(200);
         }
         
-
-        //mainWindow->setShape(ball, new Colour(255, 255, 255));
         mainWindow->draw();
 	}
 
@@ -142,6 +140,9 @@ int main()
     {
         delete objects[i];
     }
+
+    delete mainWindow;
+    delete white;
 
     return 0;
 }

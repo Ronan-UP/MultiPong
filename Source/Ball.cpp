@@ -17,6 +17,11 @@ Ball::Ball(int x, int y, int r, double a, int width, int height) : SolidRectangl
     reset();
 }
 
+Ball::~Ball()
+{
+    delete [] objects;
+}
+
 void Ball::bindObject(SolidRectangle* r)
 {
     for (int i =0;i<4;i++)
@@ -76,15 +81,18 @@ void Ball::update()
     if (serving && aB != angle) //Hit a paddle, since it can't hit a wall. First hit, change velocity
     {
         velocity = 9;
+        serving = false;
     }
 
     //Player2 gets a point
-    if (getPosition()->x<0)
-        throw 2;
-    //Player1 gets a point
-    if (getPosition()->x>winWidth)
+    if (position->x<0)
         throw 1;
+    //Player1 gets a point
+    if (position->x>winWidth)
+        throw 0;
 
 
     changePosition(velocity*cos(angle), velocity*sin(angle));
 }
+
+

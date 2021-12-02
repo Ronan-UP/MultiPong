@@ -50,9 +50,18 @@ double Player::collide(SolidRectangle* ball, double angle)
     }
    else if (ballR->x >= l->x && ballL->x < l->x && ((ballB->y > t->y && ballT->y < b->y) || (ballT->y < b->y && ballB->y > b->y)) ) //Collision on the left
     {
-      double rel = -(ball->getCentreY() - getCentreY())/(double)getHeight();
+        double rel = -(ball->getCentreY() - getCentreY())/(double)getHeight();
         retAngle = rel*M_PI/3+ M_PI;
     }
+
+   delete t;
+   delete b;
+   delete l;
+   delete r;
+   delete ballB;
+   delete ballR;
+   delete ballL;
+   delete ballT;
 
   return retAngle;
 
