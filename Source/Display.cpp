@@ -21,7 +21,7 @@ void Display::setShape(SolidRectangle* r, Colour* c)
 	re->y = temp->getPosition()->y;
 	re->w = r->getWidth();
 	re->h = r->getHeight();
-	SDL_RenderDrawRect(renderer, re);
+	SDL_RenderFillRect(renderer, re);
 //	delete temp;
 }
 

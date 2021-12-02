@@ -6,7 +6,7 @@ using namespace std;
 
 //The margin between the player rectangle and the edge of the screen
 const int margin = 20;
-Player::Player(bool p1, double w, double h, int ww, int wh) : SolidRectangle(p1 ? (margin) : (ww-margin - w), h/2, w, h)
+Player::Player(bool p1, double w, double h, int ww, int wh) : SolidRectangle(p1 ? (margin) : (ww-margin - w), wh/2, w, h)
 {
     int x = 0;
     int y = wh/2;
@@ -40,7 +40,6 @@ double Player::collide(SolidRectangle* ball, double angle)
     Point* b = getBBound();
     Point* l = getLBound();
     Point* r = getRBound();
-
 
     //Relative vertical distance
 

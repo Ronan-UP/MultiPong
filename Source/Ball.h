@@ -17,10 +17,11 @@ class Ball : public SolidRectangle
         int winWidth;
         int winHeight;
 
+        bool serving;
         SolidRectangle** objects;
 
     public:
-        Ball(int x, int y, int r, double a, double vel, int width, int height);
+        Ball(int x, int y, int r, double a, int width, int height);
 
         void bindObject(SolidRectangle* r);
 
@@ -28,6 +29,8 @@ class Ball : public SolidRectangle
         void update();
         double getAngle();
         void setAngle(double a);
+        void setVelocity(double v);
+        void reset();
 
 };
 

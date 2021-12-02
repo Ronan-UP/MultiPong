@@ -2,10 +2,9 @@
 
 using namespace std;
 
-Ball::Ball(int x, int y, int r, double a, double vel, int width, int height) : SolidRectangle(x, y, r/2, r/2)
+Ball::Ball(int x, int y, int r, double a, int width, int height) : SolidRectangle(x, y, r/2, r/2)
 {
     angle = a;
-    velocity = vel;
 
     winWidth = width;
     winHeight = height;
@@ -14,6 +13,8 @@ Ball::Ball(int x, int y, int r, double a, double vel, int width, int height) : S
     {
         objects[i] = nullptr;
     }
+
+    reset();
 }
 
 void Ball::bindObject(SolidRectangle* r)
@@ -38,6 +39,27 @@ void Ball::setAngle(double a)
     angle = a;
 }
 
+//Reset the ball to a serving state
+void Ball::reset()
+{
+    serving = true;
+    double dir = rand()/(double)RAND_MAX;
+    angle = 0;
+
+    if (dir<0.5)
+        angle = M_PI;
+
+    setX(winWidth/2);
+    setY(winHeight/2);
+    velocity = 3;
+    
+}
+
+void Ball::setVelocity(double v)
+{  
+    velocity = v;
+}
+
 void Ball::update()
 {
 
@@ -45,45 +67,16 @@ void Ball::update()
     //Works on the assumption that p1 is left, p2 is right
 
 
+    double aB = angle;
     for (int i =0;i<4 && objects[i];i++)
     {
         angle = objects[i]->collide(this, angle);
     }
   
-  /*  Point* pos = image->getPosition();
-
-    Point* left = image->getLBound();
-
-    if (p1->collides(left)) //Hit left paddle
+    if (serving && aB != angle) //Hit a paddle, since it can't hit a wall. First hit, change velocity
     {
-        angle = 3*M_PI - angle;
+        velocity = 9;
     }
-    else
-    {
-        Point* right = image->getRBound();
-        if (p2->collides(right)) //Hit right paddle
-        {
-            angle = M_PI - angle;
-        }
-        else
-        {
-            Point* b = image->getBBound();
-            Point* t = image->getTBound();
-            if (b->y > winHeight) //Hit bottom of screen
-            {
-                angle = -1*angle;
-            }
-            else if (t->y < 0) //Hit top of screen
-            {
-                angle = 2*M_PI - angle;
-            }
-
-            delete b;
-            delete t;
-        }
-        delete right;
-    }
-    delete left; */
 
     //Player2 gets a point
     if (getPosition()->x<0)
