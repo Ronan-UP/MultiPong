@@ -26,22 +26,31 @@ Server::Server(int port)
          return;
      }
 
-     initSocket = sockfd;
+    initSocket = sockfd;
 
 
 }
 
 
-void Server::startListen()
+bool Server::startListen()
 {
 
     listen(initSocket, 1);
     sockaddr_in cli_addr;
 
     socklen_t clilen = sizeof(cli_addr);
-    comSocket = accept(initSocket, (struct sockaddr*)&cli_addr, &clilen);
 
-    //string mess = "You have successfully connected\n";
+    struct pollfd pfds[1];
+
+    pfds[0].fd = initSocket;
+    pfds[0].events = POLLIN;
+    int num_events = poll(pfds, 1, 500);
+
+    if (num_events == 0)
+        return false;
+
+    comSocket = accept(initSocket, (struct sockaddr*)&cli_addr, &clilen);
+    return true;
 }
 
 string Server::readData() //Should be revised
@@ -63,5 +72,4 @@ string Server::readData() //Should be revised
 void Server::writeData(string dat)
 {
     send(comSocket, dat.c_str(), dat.length(), 0);
-    cout<<dat<<endl<<"Size: "<<sizeof(dat)<<endl;
 }

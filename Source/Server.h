@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <sys/ioctl.h>
+#include <poll.h>
 #include <iostream>
 
 using namespace std;
@@ -21,7 +22,7 @@ class Server
 
     public:
     Server(int port);
-    void startListen();
+    bool startListen();
     //Get buffered data
     string readData();
     void writeData(string dat);

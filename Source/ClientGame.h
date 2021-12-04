@@ -14,6 +14,7 @@ class ClientGame : public Game
         SDL_Event event;
         Client* client;
         map<int, bool> keys;
+        double prevPos;
 
     public:
         ClientGame(int width, int height, string host, int port);

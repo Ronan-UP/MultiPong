@@ -12,12 +12,18 @@ ServerGame::ServerGame(int width, int height, int port) : Game(width, height)
     }
 
     p2up = p2down = false;
-    server->startListen();
+    //ready = false;
+
 }
 
 ServerGame::~ServerGame()
 {
     delete server;
+}
+
+bool ServerGame::tryConnection()
+{
+    return server->startListen();
 }
 
 //Update game objects, get, send data and draw

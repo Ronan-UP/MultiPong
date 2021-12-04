@@ -20,6 +20,7 @@ class ServerGame : public Game
         ServerGame(int width, int height, int port);
         ~ServerGame();
         int update();
+        bool tryConnection();
 
 };
 

@@ -1,10 +1,11 @@
 #include "ClientGame.h"
-
+#include <iostream>
 using namespace std;
 
 ClientGame::ClientGame(int width, int height, string host, int port) : Game(width, height)
 {
     client = new Client(host, port);
+    prevPos = 0;
 
 }
 
@@ -42,16 +43,33 @@ int ClientGame::update()
 
     //Point* p2Pos = objects[4]->getPosition();
     string pu = (keys[SDLK_p]? "1" : "0");
-    client->writeD("$" + pu + (keys[SDLK_l]? "1" : "0") + "#");
+    string send = "$" + pu + (keys[SDLK_l]? "1" : "0") + "#";
+
+
+    client->writeD(send);
     //delete p2Pos;
 
     string dat = client->readD();
 
     if (dat != "")
     {
-        GameState* gs = new GameState(dat, 1000);
+        int count = 0;
+        for (int i=0;i<dat.length();i++) 
+        {
+            if (dat[i] == '$')
+                count = i;
+        }
+
+        string s = "";
+        for (int i =count;i<dat.length();i++)
+        {
+            s += dat[i];
+        }
+
+        GameState* gs = new GameState(s, 100);
         setState(gs);
         delete gs;
+    
     }
 
     return 0;

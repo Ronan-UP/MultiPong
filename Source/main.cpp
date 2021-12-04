@@ -97,6 +97,25 @@ switch (gt)
     case LANHost:
     {
         game = new ServerGame(width, height, 5001);
+
+        mainWindow->clear();
+        mainWindow->showText("Waiting for connection......", 50, width / 4, 10);
+        mainWindow->draw();
+        while (!dynamic_cast<ServerGame*>(game)->tryConnection())
+        { 
+            while (SDL_PollEvent(&event))
+            {
+                switch (event.type)
+                {
+                    case SDL_QUIT:
+                    {
+                        return 0;
+                        break;
+                    }
+                }
+            }
+        }
+
         break;
     }
     case LANClient:
