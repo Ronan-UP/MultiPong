@@ -1,3 +1,6 @@
+#ifndef SERVER_H
+#define SERVER_H
+
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/socket.h>
@@ -20,5 +23,8 @@ class Server
     Server(int port);
     void startListen();
     //Get buffered data
-    string getData();
+    string readData();
+    void writeData(string dat);
 };
+
+#endif

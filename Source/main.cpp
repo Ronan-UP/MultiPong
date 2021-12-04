@@ -2,6 +2,8 @@
 #include "Server.h"
 #include "Client.h"
 #include "LocalGame.h"
+#include "ClientGame.h"
+#include "ServerGame.h"
 
 using namespace std;
 
@@ -83,7 +85,27 @@ SDL_Event event;
  Colour *white = new Colour(255, 255, 255);
  const int numObjects = 5;
 
-Game* game = new LocalGame(width, height);
+Game* game;
+
+switch (gt)
+{
+    case Local:
+    {
+        game = new LocalGame(width, height);
+        break;
+    }
+    case LANHost:
+    {
+        game = new ServerGame(width, height, 5001);
+        break;
+    }
+    case LANClient:
+    {
+        game = new ClientGame(width, height, "localhost", 5001);
+        break;
+    }
+}
+
 SolidRectangle** objects = game->getObjects();
 
 while (running)

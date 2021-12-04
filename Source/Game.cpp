@@ -49,3 +49,11 @@ int Game::getP2Score()
 {
     return scores[1];
 }
+
+void Game::setState(GameState* gs)
+{
+    objects[0]->setX(gs->ballPos->x);
+    objects[0]->setY(gs->ballPos->y);
+    objects[3]->setY(gs->p1Y);
+    objects[4]->setY(gs->p2Y);
+}

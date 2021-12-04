@@ -41,11 +41,10 @@ void Server::startListen()
     socklen_t clilen = sizeof(cli_addr);
     comSocket = accept(initSocket, (struct sockaddr*)&cli_addr, &clilen);
 
-    string mess = "You have successfully connected\n";
-    send(comSocket, mess.c_str(), sizeof(mess), 0);
+    //string mess = "You have successfully connected\n";
 }
 
-string Server::getData() //Should be revised
+string Server::readData() //Should be revised
 {
     int bCount;
     ioctl(comSocket, FIONREAD, &bCount);
@@ -57,5 +56,12 @@ string Server::getData() //Should be revised
     bzero(buffer, 256);
 
     read(comSocket, buffer, 256);
+
     return buffer;
+}
+
+void Server::writeData(string dat)
+{
+    send(comSocket, dat.c_str(), dat.length(), 0);
+    cout<<dat<<endl<<"Size: "<<sizeof(dat)<<endl;
 }

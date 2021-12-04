@@ -1,3 +1,6 @@
+#ifndef CLIENT_H
+#define CLIENT_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -6,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/ioctl.h>
 #include <netdb.h>
 
 using namespace std;
@@ -16,9 +20,12 @@ class Client
     public:
         Client(string server, int port);
         void writeD(string data);
+        string readD();
     private:
         int comSocket;
 
 
 
 };
+
+#endif
