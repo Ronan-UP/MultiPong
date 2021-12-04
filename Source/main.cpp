@@ -1,11 +1,7 @@
 #include <iostream>
-#include <cmath>
-#include "Display.h"
-#include <map>
-#include <chrono>
-
-#include "Player.h"
-#include "Ball.h"
+#include "Server.h"
+#include "Client.h"
+#include "LocalGame.h"
 
 using namespace std;
 
@@ -84,86 +80,15 @@ bool running = true;
 
 SDL_Event event;
 
-cout << "Creating players" << endl;
-Player *player1 = new Player(true, 15, 70, width, height);
-Player *player2 = new Player(false, 15, 70, width, height);
+ Colour *white = new Colour(255, 255, 255);
+ const int numObjects = 5;
 
-cout << "Creating ball " << endl;
-
-Ball *ball = new Ball(width / 2, height / 2, 30, width, height);
-
-SolidRectangle *top = new SolidRectangle(0, 0, width, 10);
-SolidRectangle *bottom = new SolidRectangle(0, height - 10, width, 10);
-
-Colour *white = new Colour(255, 255, 255);
-const int numObjects = 5;
-SolidRectangle *objects[numObjects];
-objects[0] = ball;
-objects[1] = top;
-objects[2] = bottom;
-objects[3] = player1;
-objects[4] = player2;
-
-//Have the ball check collision on these objects
-
-for (int i = 1; i < numObjects; i++)
-{
-    ball->bindObject(objects[i]);
-}
-
-int scores[2];
-scores[0] = scores[1] = 0;
-
-//Map of keys currently pressed, conveniently using sdl numbers.
-//Reference the up key with keys[SDLK_UP]
-map<int, bool> keys;
-
-bool turn = true;
-
-int playerMov = 7;
+Game* game = new LocalGame(width, height);
+SolidRectangle** objects = game->getObjects();
 
 while (running)
 {
-
     mainWindow->clear();
-
-    while (SDL_PollEvent(&event))
-    {
-        switch (event.type)
-        {
-        case SDL_QUIT:
-        {
-            running = false;
-            break;
-        }
-        case SDL_KEYDOWN:
-        {
-            keys[event.key.keysym.sym] = true;
-            break;
-        }
-        case SDL_KEYUP:
-        {
-            keys[event.key.keysym.sym] = false;
-            break;
-        }
-        }
-    }
-
-    if (keys[SDLK_w] != keys[SDLK_s])
-    {
-        if (keys[SDLK_w])
-            player1->changeVertPos(-playerMov);
-        if (keys[SDLK_s])
-            player1->changeVertPos(playerMov);
-    }
-
-    if (keys[SDLK_p] != keys[SDLK_l])
-    {
-        if (keys[SDLK_p])
-            player2->changeVertPos(-playerMov);
-        if (keys[SDLK_l])
-            player2->changeVertPos(playerMov);
-    }
 
     //Draw the main objects
     for (int i = 0; i < numObjects; i++)
@@ -171,40 +96,30 @@ while (running)
         mainWindow->setShape(objects[i], white);
     }
 
-    mainWindow->showText(to_string(scores[0]), 50, width / 4, 10);
-    mainWindow->showText(to_string(scores[1]), 50, 3 * width / 4, 10);
+    mainWindow->showText(to_string(game->getP1Score()), 50, width / 4, 10);
+    mainWindow->showText(to_string(game->getP2Score()), 50, 3 * width / 4, 10);
 
     try
     {
-        ball->update();
-    }
-    catch (int p)
-    {
-        cout << p << " got a point" << endl;
-        scores[p]++;
-        ball->reset();
-        SDL_Delay(200);
-
-        if (scores[0] >= 10 || scores[1] >= 10)
+        int res = game->update();
+        if (res <0)
         {
-            string win = "1";
-            if (scores[1] >= 10)
-                win = "2";
-
-            mainWindow->clear();
-            mainWindow->showText("Player " + win + " wins!", 70, (width - 500) / 2, 300);
-            mainWindow->draw();
-            SDL_Delay(2000);
             return 0;
         }
     }
+    catch (const char* p)
+    {
+        cout << p <<endl;
+        //Here
+        mainWindow->clear();
+        mainWindow->showText(p, 70, (width - 500) / 2, 300);
+        mainWindow->draw();
+        SDL_Delay(500);
+
+        return 0;
+    }
 
     mainWindow->draw();
-}
-
-for (int i = 0; i < numObjects; i++)
-{
-    delete objects[i];
 }
 
 delete mainWindow;
@@ -221,7 +136,6 @@ int getMenuOption(int options[], int numOp)
     {
         while (SDL_PollEvent(&event))
         {
-
             switch (event.type)
             {
                 case SDL_QUIT:
@@ -241,6 +155,6 @@ int getMenuOption(int options[], int numOp)
             }
         }
     }
-    cout<<"No longer polling"<<endl;
-    return -1;
+
+    return -1; //Should not happen
 }

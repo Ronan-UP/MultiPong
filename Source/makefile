@@ -1,4 +1,4 @@
-ofiles = main.o Display.o Shape.o Rectangle.o Player.o Circle.o Ball.o
+ofiles = main.o Display.o Shape.o Rectangle.o Player.o Circle.o Ball.o Server.o Client.o Game.o LocalGame.o
 gpp_o = g++ -c 
 link_flags_sdl2 = -LLib/ -lSDL2 -lSDL2_ttf
 
@@ -6,7 +6,7 @@ main: $(ofiles)
 	g++ $(ofiles) $(link_flags_sdl2) -o main
 
 
-main.o: main.cpp Display.h Player.h Ball.h
+main.o: main.cpp Display.h Player.h Ball.h Server.h Client.h Game.h
 	$(gpp_o) main.cpp
 
 Display.o: Display.h Display.cpp Circle.h
@@ -26,6 +26,18 @@ Player.o: Player.h Player.cpp Rectangle.h
 
 Ball.o: Ball.h Ball.cpp Circle.h Player.h
 	$(gpp_o) Ball.cpp
+
+Server.o: Server.h Server.cpp
+	$(gpp_o) Server.cpp
+
+Client.o: Client.h Client.cpp
+	$(gpp_o) Client.cpp
+
+Game.o: Game.h Game.cpp
+	$(gpp_o) Game.cpp
+
+LocalGame.o: Game.h LocalGame.h LocalGame.cpp
+	$(gpp_o) LocalGame.cpp
 
 run: main
 	./main
