@@ -15,6 +15,7 @@ class ClientGame : public Game
         Client* client;
         map<int, bool> keys;
         double prevPos;
+        string lastState;
 
     public:
         ClientGame(int width, int height, string host, int port);

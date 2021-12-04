@@ -99,7 +99,7 @@ switch (gt)
         game = new ServerGame(width, height, 5001);
 
         mainWindow->clear();
-        mainWindow->showText("Waiting for connection......", 50, width / 4, 10);
+        mainWindow->showText("Waiting for connection......", 30, width / 6, 10);
         mainWindow->draw();
         while (!dynamic_cast<ServerGame*>(game)->tryConnection())
         { 

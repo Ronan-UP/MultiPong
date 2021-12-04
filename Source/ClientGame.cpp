@@ -6,6 +6,7 @@ ClientGame::ClientGame(int width, int height, string host, int port) : Game(widt
 {
     client = new Client(host, port);
     prevPos = 0;
+    lastState = "$00#";
 
 }
 
@@ -44,10 +45,10 @@ int ClientGame::update()
     //Point* p2Pos = objects[4]->getPosition();
     string pu = (keys[SDLK_p]? "1" : "0");
     string send = "$" + pu + (keys[SDLK_l]? "1" : "0") + "#";
-
-
-    client->writeD(send);
-    //delete p2Pos;
+    if (lastState != "$00#" && send != lastState) //Only send data if necessary
+    {
+        client->writeD(send);
+    }
 
     string dat = client->readD();
 
