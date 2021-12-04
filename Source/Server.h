@@ -1,3 +1,6 @@
+#ifndef SERVER_H
+#define SERVER_H
+
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/socket.h>
@@ -22,3 +25,5 @@ class Server
     //Get buffered data
     string getData();
 };
+
+#endif

@@ -83,7 +83,22 @@ SDL_Event event;
  Colour *white = new Colour(255, 255, 255);
  const int numObjects = 5;
 
-Game* game = new LocalGame(width, height);
+Game* game;
+
+switch (gt)
+{
+    case Local:
+    {
+        game = new LocalGame(width, height);
+        break;
+    }
+    case LANHost:
+    {
+        //
+        break;
+    }
+}
+
 SolidRectangle** objects = game->getObjects();
 
 while (running)

@@ -1,3 +1,6 @@
+#ifndef LGAME_H
+#define LGAME_H
+
 #include "Game.h"
 
 using namespace std;
@@ -12,3 +15,5 @@ class LocalGame : public Game
         LocalGame(int width, int height);
         int update();
 };
+
+#endif

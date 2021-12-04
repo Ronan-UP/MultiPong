@@ -14,10 +14,26 @@ Client::Client(string serv, int port)
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
     comSocket = sockfd;
+    delete server; //Watch out
 }
 
 void Client::writeD(string t)
 {
     const char* b = t.c_str();
     write(comSocket, b, strlen(b));
+}
+
+char* Client::readD()
+{
+
+    int bCount;
+    ioctl(comSocket, FIONREAD, &bCount);
+    if (bCount < 1) //Nothing there
+        return nullptr;
+
+    //1KB buffer
+    char buffer[1024];
+    bzero(buffer, 1024);
+    read(comSocket, buffer, 1024);
+    return buffer;
 }
