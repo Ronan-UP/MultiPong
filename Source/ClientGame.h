@@ -11,7 +11,9 @@ using namespace std;
 class ClientGame : public Game
 {
     private:
+        SDL_Event event;
         Client* client;
+        map<int, bool> keys;
 
     public:
         ClientGame(int width, int height, string host, int port);

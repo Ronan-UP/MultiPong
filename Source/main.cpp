@@ -2,6 +2,8 @@
 #include "Server.h"
 #include "Client.h"
 #include "LocalGame.h"
+#include "ClientGame.h"
+#include "ServerGame.h"
 
 using namespace std;
 
@@ -94,7 +96,12 @@ switch (gt)
     }
     case LANHost:
     {
-        //
+        game = new ServerGame(width, height, 5001);
+        break;
+    }
+    case LANClient:
+    {
+        game = new ClientGame(width, height, "localhost", 5001);
         break;
     }
 }

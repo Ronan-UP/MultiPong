@@ -20,7 +20,7 @@ class Client
     public:
         Client(string server, int port);
         void writeD(string data);
-        char* readD();
+        string readD();
     private:
         int comSocket;
 

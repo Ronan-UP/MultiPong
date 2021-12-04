@@ -23,7 +23,8 @@ class Server
     Server(int port);
     void startListen();
     //Get buffered data
-    string getData();
+    string readData();
+    void writeData(string dat);
 };
 
 #endif

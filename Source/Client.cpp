@@ -14,7 +14,7 @@ Client::Client(string serv, int port)
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
     connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
     comSocket = sockfd;
-    delete server; //Watch out
+    //delete server; //Watch out
 }
 
 void Client::writeD(string t)
@@ -23,13 +23,13 @@ void Client::writeD(string t)
     write(comSocket, b, strlen(b));
 }
 
-char* Client::readD()
+string Client::readD()
 {
 
     int bCount;
     ioctl(comSocket, FIONREAD, &bCount);
     if (bCount < 1) //Nothing there
-        return nullptr;
+        return "";
 
     //1KB buffer
     char buffer[1024];

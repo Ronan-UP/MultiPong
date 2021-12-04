@@ -17,15 +17,42 @@ ClientGame::~ClientGame()
 //Data for three objects needs to be retrieved
 int ClientGame::update()
 {
-    Point* p2Pos = objects[4]->getPosition();
-    client->writeD("$" + to_string(p2Pos->y) + "#");
-    delete p2Pos;
-
-    char* dat = client->readD();
-    if (dat)
+    while (SDL_PollEvent(&event))
     {
-        GameState* gs = new GameState(dat, 100);
+        switch (event.type)
+        {
+            case SDL_QUIT:
+            {
+                return -1;
+                break;
+            }
+            case SDL_KEYDOWN:
+            {
+                keys[event.key.keysym.sym] = true;
+                break;
+            }
+            case SDL_KEYUP:
+            {
+                keys[event.key.keysym.sym] = false;
+                break;
+            }
+        }
+    }
+
+
+    //Point* p2Pos = objects[4]->getPosition();
+    string pu = (keys[SDLK_p]? "1" : "0");
+    client->writeD("$" + pu + (keys[SDLK_l]? "1" : "0") + "#");
+    //delete p2Pos;
+
+    string dat = client->readD();
+
+    if (dat != "")
+    {
+        GameState* gs = new GameState(dat, 1000);
         setState(gs);
         delete gs;
     }
+
+    return 0;
 }

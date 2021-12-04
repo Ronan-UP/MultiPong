@@ -8,13 +8,14 @@
 
 #include "Player.h"
 #include "Ball.h"
+//#include <iostream>
 
 using namespace std;
 
 //The gamestate holds position data for the three main objects
 struct GameState
 {
-    GameState(char* data, int length) //Generate from text
+    GameState(string data, int length) //Generate from text
     {
         double ballX;
         double ballY;
@@ -23,7 +24,7 @@ struct GameState
         int i =0;
         for (i =0;i<length && data[i] != '$';i++) {}//Go to start of structure
 
-        for (;i<length && data[i] != '#';i++)
+        for (i++;i<length && data[i] != '#';i++)
         {
             text += data[i];
         }

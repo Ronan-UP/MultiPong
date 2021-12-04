@@ -11,9 +11,14 @@ using namespace std;
 class ServerGame : public Game
 {
     private:
+        Server* server;
+        SDL_Event event;
+        map<int, bool> keys;
+        bool p2up, p2down;
 
     public:
         ServerGame(int width, int height, int port);
+        ~ServerGame();
         int update();
 
 };
