@@ -1,26 +1,23 @@
 #include "Client.h"
+#include <iostream>
 
 using namespace std;
 
 Client::Client(string serv, int port)
 {
-    struct hostent *server = gethostbyname(serv.c_str());
-    struct sockaddr_in serv_addr;
     serv_addr.sin_family = AF_INET;
-
-    bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
     serv_addr.sin_port = htons(port);
+    serv_addr.sin_addr.s_addr = inet_addr(serv.c_str());
 
-    int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr));
+    int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+
     comSocket = sockfd;
-    //delete server; //Watch out
 }
 
 void Client::writeD(string t)
 {
     const char* b = t.c_str();
-    write(comSocket, b, strlen(b));
+    sendto(comSocket, b, strlen(b), MSG_CONFIRM, (const struct sockaddr *) &serv_addr, sizeof(serv_addr));
 }
 
 string Client::readD()
@@ -31,9 +28,16 @@ string Client::readD()
     if (bCount < 1) //Nothing there
         return "";
 
-    //1KB buffer
-    char buffer[1024];
-    bzero(buffer, 1024);
-    read(comSocket, buffer, 1024);
+     //1KB buffer
+     char buffer[1024];
+     bzero(buffer, 1024);
+     socklen_t len;
+
+    int n = recvfrom(comSocket, (char *)buffer, 1024, MSG_WAITALL, (struct sockaddr *) &serv_addr, &len);
+
+    if (!n)
+        return "";
+    
+    buffer[n] = '\0';
     return buffer;
 }

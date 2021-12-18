@@ -115,12 +115,11 @@ switch (gt)
                 }
             }
         }
-
         break;
     }
     case LANClient:
     {
-        game = new ClientGame(width, height, "localhost", 5001);
+        game = new ClientGame(width, height, "192.168.1.163", 5001);
         break;
     }
 }
@@ -142,7 +141,9 @@ while (running)
 
     try
     {
+        //cout<<"B"<<endl;
         int res = game->update();
+        //cout<<"A"<<endl;
         if (res <0)
         {
             return 0;

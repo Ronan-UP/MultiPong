@@ -11,6 +11,7 @@
 #include <netinet/in.h>
 #include <sys/ioctl.h>
 #include <netdb.h>
+#include <arpa/inet.h>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ class Client
         string readD();
     private:
         int comSocket;
+        struct sockaddr_in serv_addr;
 
 
 

@@ -7,7 +7,7 @@ using namespace std;
 Server::Server(int port)
 {
 
-    int sockfd =  socket(AF_INET, SOCK_STREAM, 0);
+    int sockfd =  socket(AF_INET, SOCK_DGRAM, 0);
      if (sockfd < 0) 
      {
           cout<<"ERROR opening socket"<<endl;
@@ -35,41 +35,34 @@ Server::Server(int port)
 bool Server::startListen()
 {
 
-    listen(initSocket, 1);
-    sockaddr_in cli_addr;
-
-    socklen_t clilen = sizeof(cli_addr);
-
-    struct pollfd pfds[1];
-
-    pfds[0].fd = initSocket;
-    pfds[0].events = POLLIN;
-    int num_events = poll(pfds, 1, 500);
-
-    if (num_events == 0)
-        return false;
-
-    comSocket = accept(initSocket, (struct sockaddr*)&cli_addr, &clilen);
+    //Implement later......
     return true;
 }
 
 string Server::readData() //Should be revised
 {
-    int bCount;
-    ioctl(comSocket, FIONREAD, &bCount);
+     int bCount;
+     ioctl(comSocket, FIONREAD, &bCount);
 
     if (bCount<1)
         return "";
 
-    char buffer[256];
-    bzero(buffer, 256);
+     char buffer[256];
+     bzero(buffer, 256);
 
-    read(comSocket, buffer, 256);
+    socklen_t len = sizeof(cliaddr);
+    int n = recvfrom(initSocket, (char *)buffer, 1024, MSG_WAITALL, ( struct sockaddr *) &cliaddr, &len);
 
+    if (!n)
+        return "";
+    
+    buffer[n] = '\0';
     return buffer;
+
 }
 
 void Server::writeData(string dat)
 {
-    send(comSocket, dat.c_str(), dat.length(), 0);
+    const char* d = dat.c_str();
+    sendto(initSocket, d, strlen(d), MSG_CONFIRM, (const struct sockaddr *) &cliaddr, sizeof(cliaddr));
 }

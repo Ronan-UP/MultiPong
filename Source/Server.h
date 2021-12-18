@@ -11,6 +11,7 @@
 #include <poll.h>
 #include <iostream>
 
+
 using namespace std;
 
 //This class is used to act as the host, using sockets to check for data from the client connection
@@ -19,6 +20,7 @@ class Server
     private:
         int initSocket;
         int comSocket;
+        sockaddr_in cliaddr;
 
     public:
     Server(int port);

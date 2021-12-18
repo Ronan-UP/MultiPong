@@ -17,7 +17,7 @@ ClientGame::~ClientGame()
 
 //Get data from server and draw the result
 //Data for three objects needs to be retrieved
-int ClientGame::update()
+int ClientGame::update()    
 {
     while (SDL_PollEvent(&event))
     {
@@ -45,17 +45,18 @@ int ClientGame::update()
     //Point* p2Pos = objects[4]->getPosition();
     string pu = (keys[SDLK_p]? "1" : "0");
     string send = "$" + pu + (keys[SDLK_l]? "1" : "0") + "#";
-    if (lastState != "$00#" && send != lastState) //Only send data if necessary
+    if (!(lastState != "$00#" && send != lastState)) //Only send data if necessary
     {
         client->writeD(send);
     }
+    lastState = send;
 
     string dat = client->readD();
 
     if (dat != "")
     {
         int count = 0;
-        for (int i=0;i<dat.length();i++) 
+        for (int i=0;i<dat.length();i++)    
         {
             if (dat[i] == '$')
                 count = i;
