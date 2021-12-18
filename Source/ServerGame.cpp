@@ -85,17 +85,31 @@ int ServerGame::update()
         scores[s]++;
         ball->reset();
 
+        int r = 0;
         if (scores[0] >=10)
-            throw "Player 1 wins!";
+            r = 1;
+            //throw "Player 1 wins!";
         
         if (scores[1] >=10)
-            throw "Player 2 wins!";
+            r = 2;
+            //throw "Player 2 wins!";
+
+        if (r)
+        {
+            string text = "Player 1 wins!";
+            if (r == 2)
+                text = "Player 2 wins!";
+
+            string stext = "$~" + text + "#"; //End Game and write result
+            server->writeDataAck(stext, 200);
+            throw text;
+        }
     }
 
     Point* bPos = objects[0]->getPosition();
     Point* p1Pos = objects[3]->getPosition();
     Point* p2Pos = objects[4]->getPosition();
-    string state = "$" + to_string(bPos->x) + "#" + to_string(bPos->y) + "#" + to_string(p1Pos->y) + "#" + to_string(p2Pos->y) + "#";
+    string state = "$" + to_string(bPos->x) + "#" + to_string(bPos->y) + "#" + to_string(p1Pos->y) + "#" + to_string(p2Pos->y) + "#" + to_string(scores[0]) + "#" + to_string(scores[1]) + "#";
     server->writeData(state);
 
     return 0;

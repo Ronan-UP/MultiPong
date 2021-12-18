@@ -1,5 +1,4 @@
 #include "Client.h"
-#include <iostream>
 
 using namespace std;
 
@@ -38,6 +37,37 @@ string Client::readD()
     if (!n)
         return "";
     
+    if (buffer[0] == '@') //A message that must be acknowledged
+    {
+        int num, i;
+        string t = "";
+        for (i = 1;i<n && buffer[i] != '$';i++)
+            t += buffer[i];
+
+        try
+        {
+            num = stoi(t);
+        }
+        catch(...)
+        {
+            return "";
+        }
+
+        string data = "@%" + to_string(num) + "#";
+        for (int k =0;k<20;k++) //Send ack 20 times
+        {
+            writeD(data);
+        }
+
+        string finalres = "";
+        for (;i<n;i++)
+            finalres += buffer[i];
+
+        return finalres;
+
+    }
+
+    //cout<<buffer<<endl;
     buffer[n] = '\0';
     return buffer;
 }

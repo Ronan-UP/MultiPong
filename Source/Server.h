@@ -22,12 +22,15 @@ class Server
         int comSocket;
         sockaddr_in cliaddr;
 
+        int ackNo;
+
     public:
     Server(int port);
     bool startListen();
     //Get buffered data
     string readData();
     void writeData(string dat);
+    void writeDataAck(string dat, int limit);
 };
 
 #endif

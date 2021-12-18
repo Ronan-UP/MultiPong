@@ -1,5 +1,5 @@
 #include "ClientGame.h"
-#include <iostream>
+
 using namespace std;
 
 ClientGame::ClientGame(int width, int height, string host, int port) : Game(width, height)
@@ -68,9 +68,16 @@ int ClientGame::update()
             s += dat[i];
         }
 
-        GameState* gs = new GameState(s, 100);
-        setState(gs);
-        delete gs;
+        try
+        {
+            GameState* gs = new GameState(s, 100);
+            setState(gs);
+            delete gs;
+        }
+        catch (string p)
+        {
+            throw p;
+        }
     
     }
 

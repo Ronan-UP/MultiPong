@@ -120,7 +120,7 @@ switch (gt)
     }
     case LANClient:
     {
-        game = new ClientGame(width, height, "192.168.1.163", 5001);
+        game = new ClientGame(width, height, "127.0.0.1", 5001); //192.168.1.163
         break;
     }
 }
@@ -150,14 +150,14 @@ while (running)
             return 0;
         }
     }
-    catch (const char* p)
+    catch (string p)
     {
         cout << p <<endl;
         //Here
         mainWindow->clear();
         mainWindow->showText(p, 70, (width - 500) / 2, 300);
         mainWindow->draw();
-        SDL_Delay(500);
+        SDL_Delay(2000);
 
         return 0;
     }

@@ -8,7 +8,7 @@
 
 #include "Player.h"
 #include "Ball.h"
-//#include <iostream>
+#include <iostream>
 
 using namespace std;
 
@@ -23,6 +23,15 @@ struct GameState
         string text = "";
         int i =0;
         for (i =0;i<length && data[i] != '$';i++) {}//Go to start of structure
+
+        //cout<<data<<endl;
+        if (data[i+1] == '~') //Throw command, game done
+        {
+            string endRes = "";
+            for (i +=2;i<length && data[i] != '#';i++)
+                endRes += data[i];
+            throw endRes;
+        }
 
         for (i++;i<length && data[i] != '#';i++)
         {
@@ -48,6 +57,18 @@ struct GameState
             text += data[i];
         }
         p2Y = stod(text);
+
+        for (i++, text = "";i<length && data[i] != '#';i++)
+        {
+            text += data[i];
+        }
+        sc1 = stoi(text);
+
+        for (i++, text = "";i<length && data[i] != '#';i++)
+        {
+            text += data[i];
+        }
+        sc2 = stoi(text);
     }
     ~GameState()
     {
@@ -56,6 +77,8 @@ struct GameState
     Point* ballPos;
     double p1Y; //Only Y coords for the players, since the x is constant
     double p2Y;
+    int sc1; //Player scores
+    int sc2;
 };
 
 //This class represents a running game
