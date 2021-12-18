@@ -56,4 +56,7 @@ void Game::setState(GameState* gs)
     objects[0]->setY(gs->ballPos->y);
     objects[3]->setY(gs->p1Y);
     objects[4]->setY(gs->p2Y);
+
+    scores[0] = gs->sc1;
+    scores[1] = gs->sc2;
 }
